@@ -1,0 +1,89 @@
+
+## My Mappings
+
+### Common Keys
+
+### Common Shortcuts
+
+#### System
+
+Alt + Tab
+Browser: Back (no shortcut?)
+Command + S
+
+#### VIM
+
+Beginning of file -> `qq`
+Save and Exit -> `:wq`
+
+#### Code
+
+Duplicate Line -> `Shift + Command + D`
+Special Command -> `Shift + Command + P`
+Open File -> `Command + P`
+End of Line -> `Command + Right`
+Start of Line -> `Command + Left`
+
+#### Divvy
+
+`Ctrl + Option + Command + Left`
+`Ctrl + Option + Command + Right`
+`Shift + Option + Command + Left`
+`Shift + Option + Command + Right`
+`Shift + Option + Command + F`
+
+#### Media
+
+Play/pause
+Volume Up
+Volume Down
+Mute
+
+#### Terminal
+
+New Tab
+New Pane: Down
+Next Tab
+Prev Tab
+Pane Up
+Pane Down
+
+### Common Commands
+
+#### Terminal
+
+```shell
+$ atom .
+$ code .
+
+$ git pull
+$ git checkout
+$ git status
+$ git diff
+$ git commit
+$ git commit -a
+$ git commit -a --amend
+$ git push --force-with-lease
+
+$ mvn package
+$ mvn clean dependency:copy-dependencies package
+$ mvn clean dependency:copy-dependencies source:jar install
+```
+
+Clear line -> Ctrl + a, Ctrl + k
+
+
+Copyright 2019 Matthew Nichoos matt@nichols.link @mattnichols
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

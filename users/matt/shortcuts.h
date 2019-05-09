@@ -1,0 +1,17 @@
+#pragma once
+
+// Divvy shortcuts
+#define DIVVY_LEFT_SM   LALT(LGUI(LSFT(KC_LEFT)))
+#define DIVVY_RIGHT_SM  LALT(LGUI(LSFT(KC_RIGHT)))
+#define DIVVY_LEFT_LG   LALT(LCTL(LGUI(KC_LEFT)))
+#define DIVVY_FULL      LALT(LCTL(LGUI(KC_F)))
+#define DIVVY_RIGHT_LG  LALT(LCTL(LGUI(KC_RIGHT)))
+
+#define KC_MAC_UNDO LGUI(KC_Z)
+#define KC_MAC_CUT LGUI(KC_X)
+#define KC_MAC_COPY LGUI(KC_C)
+#define KC_MAC_PASTE LGUI(KC_V)
+#define KC_PC_UNDO LCTL(KC_Z)
+#define KC_PC_CUT LCTL(KC_X)
+#define KC_PC_COPY LCTL(KC_C)
+#define KC_PC_PASTE LCTL(KC_V)
