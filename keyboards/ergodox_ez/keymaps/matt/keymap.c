@@ -4,10 +4,10 @@
 #include "shortcuts.h"
 
 #define BASE 0   // default layer
-#define L1 1     // Layout, Numpad, Media
-#define L2 2     // Mouse layer??
-#define L_MCRS 3 // Macros
-#define L_NUM 4
+#define NAV 1     // Layout, Numpad, Media
+#define MEDA 2     // Mouse layer??
+#define MCRS 3 // Macros
+#define NUM 4
 #define SYMB 5
 
 
@@ -34,7 +34,7 @@ enum tap_dances {
 static bool tap_dance_active = false;
 
 void git_commit_tap (qk_tap_dance_state_t *state, void *user_data) {
-  if (layer_state == L_MCRS) {
+  if (layer_state == MCRS) {
     tap_dance_active = true;
   }
   else
@@ -93,51 +93,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keymap 0: Basic layer
  *
- * ,--------------------------------------------------.           ,------------------------------------------------ ----.
- * | Esc    |   `  |   1  |   2  |   3  |   4  |  5   |           |   6  |   7  |   8  |   9  |   0  |  -_  | Bksp/Del |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+------ ----|
- * | Tab    |   Q  |   W  |   E  |   R  |   T  |  [{  |           |  ]}  |   Y  |   U  |   I  |   O  |   P  |  \|      |
- * |--------+------+------+------+------+------|      |           | MCR  |------+------+------+------+------+------ ----|
- * | LShift |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;:  |   '"     |
- * |--------+------+------+------+------+------|  (   |           |  )   |------+------+------+------+------+------ ----|
- * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |  ,<  |  .>  |  Up  | RShift/Enter |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+------ --'
- *   |      |      | LCtrl| LAlt | LGui |                                       | /?   |  =+  | Left | Down | Rght |
- *   `----------------------------------'                                       `----------------------------------'
+ * ,----------------------------------------------------.           ,-----------------------------------------------------.
+ * |  ~`    |    1   |   2  |   3  |   4  |  5   |   6  |           |   7  |   8  |   9  |   0  |  -_  |  =+  |  Bksp/Del |
+ * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
+ * | Tab    |    Q   |   W  |   E  |   R  |   T  |  [{  |           | ]}   |   Y  |   U  |   I  |   O  |   P  |   \|      |
+ * |--------+--------+------+------+------+------|      |           |[MCR] |------+------+------+------+------+-----------|
+ * | Esc    |    A   |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;:  |   '"      |
+ * |--------+--------+------+------+------+------|  (   |           |  )   |------+------+------+------+------+-----------|
+ * | LShift | Z/Ctrl |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |  ,<  |  .>  |  Up  | RShft/Ent |
+ * `--------+--------+------+------+------+-------------'           `-------------+------+------+------+------+-----------'
+ *   |LCtrl | [SYMB] | LCtrl| LAlt | LGui |                                       | /?   |  =+  | Left | Down |  Rght  |
+ *   `------------------------------------'                                       `------------------------------------'
  *                                        ,-----------------.       ,-----------------.
  *                                        |        |        |       | Cmd ` |         |
  *                                 ,------|--------|--------|       |-------+---------+-------.
  *                                 | Spc  |  Cmd   |        |       |       |         |       |
  *                                 |      |        |--------|       |-------|  Enter  |  Spc  |
- *                                 |      |        | ~L1/F5 |       |  ~L2  |         |       |
+ *                                 |      |        |[NAV]/F5|       |[MEDA] |         |       |
  *                                 `------------------------'       `-------------------------'
  */
 [BASE] = LAYOUT_ergodox(
 
-
   // Left Hand
-  KC_ESCAPE,      KC_GRAVE,        KC_1,            KC_2,            KC_3,           KC_4,           KC_5,
-  KC_TAB,         KC_Q,            KC_W,            KC_E,            KC_R,           KC_T,           LT(L_NUM, KC_LBRACKET),
-  LSFT_T(KC_NO),  KC_A,            KC_S,            KC_D,            KC_F,           KC_G,
+  KC_GRAVE,       KC_1,            KC_2,            KC_3,            KC_4,           KC_5,           KC_6,
+  KC_TAB,         KC_Q,            KC_W,            KC_E,            KC_R,           KC_T,           LT(NUM, KC_LBRACKET),
+  KC_ESCAPE,      KC_A,            KC_S,            KC_D,            KC_F,           KC_G,
   TD(TD_SFT_LCK), CTL_T(KC_Z),     KC_X,            KC_C,            KC_V,           KC_B,           KC_LPRN,
   KC_LCTRL,       MO(SYMB),        KC_LCTRL,        KC_LALT,         KC_LGUI,
 
   // Left Thumb
   KC_LBRACKET,    KC_NO,
   KC_NO,
-  KC_SPACE, KC_LGUI,  LT(L1, KC_F5),
+  KC_SPACE, KC_LGUI,  LT(NAV, KC_F5),
 
   // Right hand
-  KC_6,                    KC_7,            KC_8,            KC_9,            KC_0,           KC_MINUS,           KC_BSPACE,
-  LT(L_MCRS, KC_RBRACKET), KC_Y,            KC_U,            KC_I,            KC_O,           KC_P,               KC_BSLASH,
+  KC_7,                    KC_8,            KC_9,            KC_0,            KC_MINUS,       KC_EQUAL,           KC_BSPACE,
+  LT(MCRS, KC_RBRACKET), KC_Y,            KC_U,            KC_I,            KC_O,           KC_P,               KC_BSLASH,
                            KC_H,            KC_J,            KC_K,            KC_L,           TD(TD_SEMI),        KC_QUOT,
   KC_RPRN,                 KC_N,            KC_M,            KC_COMMA,        KC_DOT,         KC_UP,              RSFT_T(KC_ENT),
-                                            KC_SLASH,        KC_EQUAL,        KC_LEFT,        KC_DOWN,            KC_RIGHT,
+                                            KC_SLASH,        KC_NO,           KC_LEFT,        KC_DOWN,            KC_RIGHT,
 
   // Right thumb
-  LGUI(KC_GRAVE), KC_RBRACKET,
+  KC_NO,          KC_RBRACKET,
   KC_NO,
-  LT(L2, KC_NO),  KC_ENTER,  KC_SPACE
+  LT(MEDA, KC_NO),  KC_ENTER,  KC_SPACE
 
 ),
 
@@ -166,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * (*3) - Split terminal window (Cmd-Shift-D)
  */
 
-[L1] = LAYOUT_ergodox(
+[NAV] = LAYOUT_ergodox(
 
   // Left hand
   KC_TRNS,       KC_TRNS,        KC_F1,           KC_F2,            KC_F3,          KC_F4,             KC_F5,
@@ -214,7 +213,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-[L2] = LAYOUT_ergodox(
+[MEDA] = LAYOUT_ergodox(
   // left hand
   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -259,7 +258,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
-[L_MCRS] = LAYOUT_ergodox(
+[MCRS] = LAYOUT_ergodox(
   // left hand
   KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS,
   OPEN_ATOM,  OPEN_CODE, KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS,
@@ -282,7 +281,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TRNS, KC_TRNS, KC_WBAK
 ),
 
-[L_NUM] = LAYOUT_ergodox(
+[NUM] = LAYOUT_ergodox(
 
   // Left hand
   KC_TRNS,       KC_TRNS,        KC_TRNS,         KC_TRNS,          KC_TRNS,       KC_TRNS,           KC_TRNS,
@@ -363,7 +362,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
     |-----+-----+-----+-----+-----|          |-----+-----+-----+-----+-----|
     */
 
-    [0] = {
+    [BASE] = {
       // Right Hand (Left to right)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
@@ -381,7 +380,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
       M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF
     },
 
-    [1] = {
+    [NAV] = {
       // Right Hand (Left to right)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
@@ -399,7 +398,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
       M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF
     },
 
-    [L2] =  {
+    [MEDA] =  {
       // Right Hand (Left to right)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
