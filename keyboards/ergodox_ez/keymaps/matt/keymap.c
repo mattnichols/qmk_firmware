@@ -3,13 +3,14 @@
 #include "macros.h"
 #include "shortcuts.h"
 
-#define BASE 0   // default layer
-#define NAV 1     // Layout, Numpad, Media
-#define MEDA 2     // Mouse layer??
+// ********************************************
+// Layers
+#define BASE 0 // default layer
+#define NAV  1 // Layout, Numpad, Media
+#define MEDA 2 // Mouse layer??
 #define MCRS 3 // Macros
-#define NUM 4
+#define NUM  4
 #define SYMB 5
-
 
 enum custom_keycodes {
 
@@ -19,6 +20,7 @@ enum custom_keycodes {
   RGB_SLD,
 
 };
+
 #include "dynamic_macro.h"
 
 /*
@@ -97,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  ~`    |    1   |   2  |   3  |   4  |  5   |   6  |           |   7  |   8  |   9  |   0  |  -_  |  =+  |  Bksp/Del |
  * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+------+-----------|
  * | Tab    |    Q   |   W  |   E  |   R  |   T  |  [{  |           | ]}   |   Y  |   U  |   I  |   O  |   P  |   \|      |
- * |--------+--------+------+------+------+------|      |           |[MCR] |------+------+------+------+------+-----------|
+ * |--------+--------+------+------+------+------|[NUM] |           |[MCR] |------+------+------+------+------+-----------|
  * | Esc    |    A   |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;:  |   '"      |
  * |--------+--------+------+------+------+------|  (   |           |  )   |------+------+------+------+------+-----------|
  * | LShift | Z/Ctrl |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |  ,<  |  .>  |  Up  | RShft/Ent |
@@ -115,11 +117,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_ergodox(
 
   // Left Hand
-  KC_GRAVE,       KC_1,            KC_2,            KC_3,            KC_4,           KC_5,           KC_6,
-  KC_TAB,         KC_Q,            KC_W,            KC_E,            KC_R,           KC_T,           LT(NUM, KC_LBRACKET),
-  KC_ESCAPE,      KC_A,            KC_S,            KC_D,            KC_F,           KC_G,
-  TD(TD_SFT_LCK), CTL_T(KC_Z),     KC_X,            KC_C,            KC_V,           KC_B,           KC_LPRN,
-  KC_LCTRL,       MO(SYMB),        KC_LCTRL,        KC_LALT,         KC_LGUI,
+  KC_GRAVE,       KC_1,                  KC_2,                 KC_3,                  KC_4,                 KC_5,           KC_6,
+  KC_TAB,         KC_Q,                  KC_W,                 KC_E,                  KC_R,                 KC_T,           LT(NUM, KC_LBRACKET),
+  KC_ESCAPE,      MT(MOD_LSFT, KC_A),    MT(MOD_LCTL, KC_S),   MT(MOD_LALT, KC_D),    MT(MOD_LGUI, KC_F),   KC_G,
+  TD(TD_SFT_LCK), CTL_T(KC_Z),           KC_X,                 KC_C,                  KC_V,                 KC_B,           KC_LPRN,
+  KC_LCTRL,       MO(SYMB),              KC_LCTRL,             KC_LALT,               KC_LGUI,
 
   // Left Thumb
   KC_LBRACKET,    KC_NO,
@@ -127,11 +129,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_SPACE, KC_LGUI,  LT(NAV, KC_F5),
 
   // Right hand
-  KC_7,                    KC_8,            KC_9,            KC_0,            KC_MINUS,       KC_EQUAL,           KC_BSPACE,
-  LT(MCRS, KC_RBRACKET), KC_Y,            KC_U,            KC_I,            KC_O,           KC_P,               KC_BSLASH,
-                           KC_H,            KC_J,            KC_K,            KC_L,           TD(TD_SEMI),        KC_QUOT,
-  KC_RPRN,                 KC_N,            KC_M,            KC_COMMA,        KC_DOT,         KC_UP,              RSFT_T(KC_ENT),
-                                            KC_SLASH,        KC_NO,           KC_LEFT,        KC_DOWN,            KC_RIGHT,
+  KC_7,                    KC_8,            KC_9,                 KC_0,                 KC_MINUS,              KC_EQUAL,                   KC_BSPACE,
+  LT(MCRS, KC_RBRACKET),   KC_Y,            KC_U,                 KC_I,                 KC_O,                  KC_P,                       KC_BSLASH,
+                           KC_H,            MT(MOD_RGUI, KC_J),   MT(MOD_RALT, KC_K),   MT(MOD_RCTL, KC_L),    MT(MOD_RSFT, KC_SCOLON),    KC_QUOT,
+  KC_RPRN,                 KC_N,            KC_M,                 KC_COMMA,             KC_DOT,                KC_UP,                      RSFT_T(KC_ENT),
+                                            KC_SLASH,             KC_NO,                KC_LEFT,               KC_DOWN,                    KC_RIGHT,
 
   // Right thumb
   KC_NO,          KC_RBRACKET,
