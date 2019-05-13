@@ -29,37 +29,15 @@ enum custom_keycodes {
 
 enum tap_dances {
     TD_GIT_COMMIT,
-    TD_SFT_LCK,
-    TD_SEMI
+    TD_SFT_LCK
 };
 
-static bool tap_dance_active = false;
-
-void git_commit_tap (qk_tap_dance_state_t *state, void *user_data) {
-  if (layer_state == MCRS) {
-    tap_dance_active = true;
-  }
-  else
-  {
-    register_code(state->keycode);
-  }
-}
-
-void git_commit_tap_reset (qk_tap_dance_state_t *state, void *user_data) {
-  tap_dance_active = true;
-}
-
 void git_commit_tap_finished (qk_tap_dance_state_t *state, void *user_data) {
-  if (tap_dance_active) {
     if (state->count == 2) {
-      register_code16(GIT_COMMIT_AMEND);
-      unregister_code16(GIT_COMMIT_AMEND);
+      send_git_commit(true);
     } else {
-      register_code16(GIT_COMMIT_ADD);
-      unregister_code16(GIT_COMMIT_ADD);
+      send_git_commit(false); // no amend
     }
-    tap_dance_active = false;
-  }
 }
 
 // Shift vs capslock function. From bbaserdem's Planck keymap.
@@ -82,13 +60,12 @@ void caps_tap_end (qk_tap_dance_state_t *state, void *user_data) {
 
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-  //Tap once for Shift, twice for Caps Lock
-  [TD_SFT_LCK] = ACTION_TAP_DANCE_FN_ADVANCED( caps_tap, NULL, caps_tap_end ),
+    // Tap once for Shift, twice for Caps Lock
+    [TD_SFT_LCK] = ACTION_TAP_DANCE_FN_ADVANCED(caps_tap, NULL, caps_tap_end),
 
-  // Tap once "commit -a", Tap twice "commit -a --amend"
-  [TD_GIT_COMMIT] = ACTION_TAP_DANCE_FN_ADVANCED( git_commit_tap, git_commit_tap_finished, git_commit_tap_reset ),
+    // Tap once "commit -a", Tap twice "commit -a --amend"
+    [TD_GIT_COMMIT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, git_commit_tap_finished, NULL),
 
-  [TD_SEMI] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLON),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -241,15 +218,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * NOTES:
  *   git commit can be double-tapped to amend
  *
- * ,------------------------------------------------------------------.           ,-----------------------------------------------------------------.
- * |        |        |          |            |          |      |      |           |      |      |      |             |           |         |        |
- * |--------+--------+----------+------------+----------+-------------|           |------+------+------+-------------+-----------+---------+--------|
- * | Open A | Open C |          |            |          |      |      |           |      |      |      |             |           |         |        |
- * |--------+--------+----------+------------+----------+------|      |           |      |------+------+-------------+-----------+---------+--------|
- * | gs     | gd     | git pull | git commit | git push |      |------|           |------|      |      | jar install | boot:run  | package |        |
- * |--------+--------+----------+------------+----------+------|      |           |      |------+------+-------------+-----------+---------+--------|
- * |        |        |          |            |          |      |      |           |      |      |      |             |           |         |        |
- * `--------+--------+----------+------------+----------+-------------'           `-------------+------+-------------+-----------+---------+--------'
+ * ,----------------------------------------------------------------------.           ,-----------------------------------------------------------------.
+ * |        |        |          |            |          |          |      |           |      |      |      |             |           |         |        |
+ * |--------+--------+----------+------------+----------+-----------------|           |------+------+------+-------------+-----------+---------+--------|
+ * |        | Open A | Open C   |            |          |          |      |           |      |      |      |             |           |         |        |
+ * |--------+--------+----------+------------+----------+----------|      |           |      |------+------+-------------+-----------+---------+--------|
+ * |        |  gs    | gd       | git pull   |git commit| git push |------|           |------|      |      | jar install | boot:run  | package |        |
+ * |--------+--------+----------+------------+----------+----------|      |           |      |------+------+-------------+-----------+---------+--------|
+ * |        |        |          |            |          |          |      |           |      |      |      |             |           |         |        |
+ * `--------+--------+----------+------------+----------+-----------------'           `-------------+------+-------------+-----------+---------+--------'
  *   |      |        |          |            |          |                                       |      |             |           |         |      |
  *   `--------------------------------------------------'                                       `-------------------------------------------------'
  *                                        ,-------------.       ,-------------.
@@ -262,19 +239,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [MCRS] = LAYOUT_ergodox(
   // left hand
-  KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS,
-  OPEN_ATOM,  OPEN_CODE, KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS,
-  GIT_STATUS, GIT_DIFF,  GIT_PULL, TD(TD_GIT_COMMIT),  KC_TRNS, KC_TRNS,
-  KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS,
-  KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,
+  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS,
+  KC_TRNS,    OPEN_ATOM,  OPEN_CODE, KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS,
+  KC_TRNS,    GIT_STATUS, GIT_DIFF,  GIT_PULL, TD(TD_GIT_COMMIT),  KC_TRNS,
+  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS,
+  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS,
 
                                                KC_TRNS, KC_TRNS,
                                                         KC_TRNS,
                                       KC_TRNS, KC_TRNS, KC_TRNS,
   // right hand
   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MVN_JAR_INSTALL, MVN_PACKAGE,
-           KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+           KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MVN_JAR_INSTALL, MVN_PACKAGE,
   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
 
@@ -376,7 +353,7 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
       // Left Hand (Right to left)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
-      M_RGB_OFF, M_RGB_OFF, M_RGB_OFF, M_RGB_OFF,  M_RGB_OFF,
+      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
       M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
       M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
       M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF
@@ -429,6 +406,8 @@ void matrix_init_user(void) {
 
 // Set layer indicator lights
 uint32_t layer_state_set_user(uint32_t state) {
+  return state;
+
   ergodox_board_led_off();
   ergodox_right_led_1_off();
   ergodox_right_led_2_off();

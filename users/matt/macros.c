@@ -5,6 +5,15 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+void send_git_commit(bool amend) {
+    if(amend) {
+      SEND_STRING("git commit -a --amend");
+    } else {
+      SEND_STRING("git commit -a");
+    }
+    SEND_STRING(SS_TAP(X_ENTER));
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // Process Macros
@@ -46,15 +55,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     case GIT_COMMIT_ADD:
       if (record->event.pressed) {
-        SEND_STRING("git commit -a");
-        SEND_STRING(SS_TAP(X_ENTER));
+        send_git_commit(false);
       }
       return false; break;
 
     case GIT_COMMIT_AMEND:
       if (record->event.pressed) {
-        SEND_STRING("git commit -a --amend");
-        SEND_STRING(SS_TAP(X_ENTER));
+        send_git_commit(true);
       }
       return false; break;
 

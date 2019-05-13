@@ -36,3 +36,5 @@ enum macro_keycodes {
   NEW_SAFE_RANGE,
 
 };
+
+void send_git_commit(bool amend);
