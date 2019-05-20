@@ -223,9 +223,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+----------+------------+----------+-----------------|           |------+------+------+-------------+-----------+---------+--------|
  * |        | Open A | Open C   |            |          |          |      |           |      |      |      |             |           |         |        |
  * |--------+--------+----------+------------+----------+----------|      |           |      |------+------+-------------+-----------+---------+--------|
- * |        |  gs    | gd       | git pull   |git commit| git push |------|           |------|      |      | jar install | boot:run  | package |        |
+ * |        |  gs    | gd       | git pull   | (*1)     |          |------|           |------|      |      |             |           |         |        |
  * |--------+--------+----------+------------+----------+----------|      |           |      |------+------+-------------+-----------+---------+--------|
- * |        |        |          |            |          |          |      |           |      |      |      |             |           |         |        |
+ * |        | package|jar inst  |            |          |          |      |           |      |      |      |             |           |         |        |
  * `--------+--------+----------+------------+----------+-----------------'           `-------------+------+-------------+-----------+---------+--------'
  *   |      |        |          |            |          |                                       |      |             |           |         |      |
  *   `--------------------------------------------------'                                       `-------------------------------------------------'
@@ -236,14 +236,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |      |------|       |------|      |      |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
+ *
+ * *1 - git commit -a (--amend w/double-tap)
+ *
  */
 [MCRS] = LAYOUT_ergodox(
   // left hand
-  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS,
-  KC_TRNS,    OPEN_ATOM,  OPEN_CODE, KC_TRNS,  KC_TRNS, KC_TRNS,   KC_TRNS,
-  KC_TRNS,    GIT_STATUS, GIT_DIFF,  GIT_PULL, TD(TD_GIT_COMMIT),  KC_TRNS,
-  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS,
-  KC_TRNS,    KC_TRNS,    KC_TRNS,   KC_TRNS,  KC_TRNS,
+  KC_TRNS,    KC_TRNS,     KC_TRNS,         KC_TRNS,  KC_TRNS,            KC_TRNS,   KC_TRNS,
+  KC_TRNS,    OPEN_ATOM,   OPEN_CODE,       KC_TRNS,  KC_TRNS,            KC_TRNS,   KC_TRNS,
+  KC_TRNS,    GIT_STATUS,  GIT_DIFF,        GIT_PULL, TD(TD_GIT_COMMIT),  KC_TRNS,
+  KC_TRNS,    MVN_PACKAGE, MVN_JAR_INSTALL, KC_TRNS,  KC_TRNS,            KC_TRNS,   KC_TRNS,
+  KC_TRNS,    KC_TRNS,     KC_TRNS,         KC_TRNS,  KC_TRNS,
 
                                                KC_TRNS, KC_TRNS,
                                                         KC_TRNS,
