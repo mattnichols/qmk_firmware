@@ -13,7 +13,7 @@
 #define MACROS_ENABLED
 
 // How long before a tap is considered a hold.
-#define TAPPING_TERM 120
+// #define TAPPING_TERM 120 // Already defined in keyboards/ergodox_ez/config.h
 
 // Consider MT a mod if another key is simultaneously pressed.
 #define PERMISSIVE_HOLD
