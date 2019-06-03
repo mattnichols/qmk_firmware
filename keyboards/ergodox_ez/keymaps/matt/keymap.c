@@ -75,13 +75,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------------------------.           ,------------------------------------------------------.
  * |  ~`    |    1   |   2  |   3  |   4  |  5   |   6  |           |   7  |   8  |   9  |   0  |  -_  |  =+   |  Bksp/Del |
  * |--------+--------+------+------+------+-------------|           |------+------+------+------+------+-------+-----------|
- * | Tab    |    Q   |   W  |   E  |   R  |   T  |  [{  |           | ]}   |   Y  |   U  |   I  |   O  |   P   |   \|      |
+ * | Tab    |    Q   |   W  |   E  |   R  |   T  |  [{  |           |  '"  |   Y  |   U  |   I  |   O  |   P   |   \|      |
  * |--------+--------+------+------+------+------|[NUM] |           |[MCR] |------+------+------+------+-------+-----------|
- * |Esc(NAV)| A/Shft | S/Ctl| D/Alt| F/Gui|   G  |------|           |------|   H  |J/Gui |K/Alt |L/Ctl |;:/Shft|   '"      |
- * |--------+--------+------+------+------+------|  (   |           |  )   |------+------+------+------+-------+-----------|
+ * |Esc(NAV)| A/Shft | S/Ctl| D/Alt| F/Gui|   G  |------|           |------|   H  |J/Gui |K/Alt |L/Ctl |;:/Shft| Ent       |
+ * |--------+--------+------+------+------+------|  ]}  |           |  /?  |------+------+------+------+-------+-----------|
  * | LShift | Z/Ctrl |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |  ,<  |  .>  |  Up   | RShft/Ent |
  * `--------+--------+------+------+------+-------------'           `-------------+------+------+------+-------+-----------'
- *   |LCtrl | [SYMB] | LCtrl| LAlt | LGui |                                       | /?   |  =+  | Left | Down  |  Rght  |
+ *   |LCtrl | [SYMB] | LCtrl| LAlt | LGui |                                       |      |  =+  | Left | Down  |  Rght  |
  *   `------------------------------------'                                       `-------------------------------------'
  *                                        ,-----------------.       ,-----------------.
  *                                        |        |        |       | Cmd ` |         |
@@ -94,11 +94,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_ergodox(
 
   // Left Hand
-  KC_GRAVE,       KC_1,                  KC_2,                 KC_3,                  KC_4,                 KC_5,           KC_6,
-  KC_TAB,         KC_Q,                  KC_W,                 KC_E,                  KC_R,                 KC_T,           LT(NUM, KC_LBRACKET),
-  KC_ESCAPE,      MT(MOD_LSFT, KC_A),    MT(MOD_LCTL, KC_S),   MT(MOD_LALT, KC_D),    MT(MOD_LGUI, KC_F),   KC_G,
-  TD(TD_SFT_LCK), CTL_T(KC_Z),           KC_X,                 KC_C,                  KC_V,                 KC_B,           KC_LPRN,
-  KC_LCTRL,       MO(SYMB),              KC_LCTRL,             KC_LALT,               KC_LGUI,
+  KC_GRAVE,           KC_1,                  KC_2,                 KC_3,                  KC_4,                 KC_5,           KC_6,
+  KC_TAB,             KC_Q,                  KC_W,                 KC_E,                  KC_R,                 KC_T,           LT(NUM, KC_LBRACKET),
+  LT(NAV, KC_ESCAPE), MT(MOD_LSFT, KC_A),    MT(MOD_LCTL, KC_S),   MT(MOD_LALT, KC_D),    MT(MOD_LGUI, KC_F),   KC_G,
+  TD(TD_SFT_LCK),     CTL_T(KC_Z),           KC_X,                 KC_C,                  KC_V,                 KC_B,           KC_RBRACKET,
+  KC_LCTRL,           MO(SYMB),              KC_LCTRL,             KC_LALT,               KC_LGUI,
 
   // Left Thumb
   KC_LBRACKET,    KC_NO,
@@ -107,10 +107,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   // Right hand
   KC_7,                    KC_8,            KC_9,                 KC_0,                 KC_MINUS,              KC_EQUAL,                   KC_BSPACE,
-  LT(MCRS, KC_RBRACKET),   KC_Y,            KC_U,                 KC_I,                 KC_O,                  KC_P,                       KC_BSLASH,
-                           KC_H,            MT(MOD_RGUI, KC_J),   MT(MOD_RALT, KC_K),   MT(MOD_RCTL, KC_L),    MT(MOD_RSFT, KC_SCOLON),    KC_QUOT,
-  KC_RPRN,                 KC_N,            KC_M,                 KC_COMMA,             KC_DOT,                KC_UP,                      RSFT_T(KC_ENT),
-                                            KC_SLASH,             KC_NO,                KC_LEFT,               KC_DOWN,                    KC_RIGHT,
+  LT(MCRS, KC_QUOT),       KC_Y,            KC_U,                 KC_I,                 KC_O,                  KC_P,                       KC_BSLASH,
+                           KC_H,            MT(MOD_RGUI, KC_J),   MT(MOD_RALT, KC_K),   MT(MOD_RCTL, KC_L),    MT(MOD_RSFT, KC_SCOLON),    KC_ENT,
+  KC_SLASH,                KC_N,            KC_M,                 KC_COMMA,             KC_DOT,                KC_UP,                      RSFT_T(KC_ENT),
+                                            KC_NO,                KC_NO,                KC_LEFT,               KC_DOWN,                    KC_RIGHT,
 
   // Right thumb
   KC_NO,          KC_RBRACKET,
@@ -126,11 +126,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+-------------+------+--------------+----+----+-----|      |-------+----+-----+-----+-----+-----+----|
  * |        | Win Left SM |      | Win Right SM |    |    |     |      |  Vol  |    |     |     |(*1) |(*2) |    |
  * |--------+-------------+------+--------------+----+----|     |      |  Up   |----+-----+-----+-----+-----+----|
- * |        | Win Left Lg | Full | Win Right Lg |    |    |-----|      |-------| <- | \/  | /\  | ->  |     |    |
+ * |        | Win Left Lg | Full | Win Right Lg |    |    |-----|      |-------| <- | \/  | /\  | ->  |     |'"" |
  * |--------+-------------+------+--------------+----+----|     |      |  Vol  |----+-----+-----+-----+-----+----|
  * |        |             |      |              |    |    |     |      |  Dn   |    |     |     |     |     |    |
  * `--------+-------------+------+--------------+----+----------'      `-------+----+-----+-----+-----+-----+----'
- *   | EPRM |    (*3)     |      |              |    |                         |    |     |     |     |       |
+ *   | EPRM |             |      |              |    |                         |    |     |     |     |       |
  *   `-----------------------------------------------'                         `------------------------------'
  *                                                ,-------------.      ,-------------.
  *                                                |      |      |      |      |      |
@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TRNS,       KC_TRNS,        DIVVY_LEFT_SM,   KC_TRNS,          DIVVY_RIGHT_SM, KC_TRNS,           KC_TRNS,
   KC_TRNS,       KC_TRNS,        DIVVY_LEFT_LG,   DIVVY_FULL,       DIVVY_RIGHT_LG, KC_TRNS,
   KC_TRNS,       KC_TRNS,        SGUI(KC_D),      KC_TRNS,          KC_TRNS,        KC_TRNS,           KC_TRNS,
-  KC_TRNS,       KC_TRNS,        KC_TRNS,         KC_TRNS,          KC_TRNS,
+  EPRM,          KC_TRNS,        KC_TRNS,         KC_TRNS,          KC_TRNS,
 
   // Left thumb
   KC_TRNS,  KC_TRNS,
@@ -161,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Right hand
   KC_F6,             KC_F7,          KC_F8,           KC_F9,           KC_F10,             KC_F11,            KC_DEL,
   KC_AUDIO_VOL_UP,   KC_TRNS,        KC_TRNS,         KC_TRNS,         SGUI(KC_LBRACKET),  SGUI(KC_RBRACKET), KC_TRNS,
-                     KC_LEFT,        KC_DOWN,         KC_UP,           KC_RIGHT,           KC_TRNS,           KC_TRNS,
+                     KC_LEFT,        KC_DOWN,         KC_UP,           KC_RIGHT,           KC_TRNS,           KC_QUOT,
   KC_AUDIO_VOL_DOWN, KC_TRNS,        KC_TRNS,         KC_TRNS,         KC_TRNS,            KC_TRNS,           KC_TRNS,
                                      KC_TRNS,         KC_TRNS,         KC_TRNS,            KC_TRNS,           KC_TRNS,
 
@@ -348,18 +348,18 @@ const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
       // Right Hand (Left to right)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-                     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+                     M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
 
       // Left Hand (Right to left)
 
       M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,      M_RGB_OFF,
-      M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF,     M_RGB_OFF
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,    M_RGB_WHITE,
+      M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE,   M_RGB_WHITE
     },
 
     [NAV] = {
@@ -507,9 +507,9 @@ void set_layer_color(int layer) {
 void rgb_matrix_indicators_user(void) {
   if (g_suspend_state) { return; }
   switch (biton32(layer_state)) {
-    // case 0:
-    //   set_layer_color(0);
-    //   break;
+    case 0:
+      set_layer_color(0);
+      break;
     case 1:
       set_layer_color(1);
       break;
@@ -529,13 +529,11 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         eeconfig_init();
       }
-
       return false;
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
       }
-
       return false;
     case RGB_TOG:
       if (record->event.pressed) {
