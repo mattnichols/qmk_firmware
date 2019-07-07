@@ -1,5 +1,5 @@
 /*
-Copyright 2012 Jun Wako <wakojun@gmail.com>
+Copyright 2019 Matt Nichols <matt@nichols.link>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,16 +17,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-// #include "config_common.h"
-// #include <stdint.h>
-
 /* USB Device descriptor parameter */
-#define VENDOR_ID    0xFEED
-#define PRODUCT_ID   0x6060
-#define DEVICE_VER   0x0001
-#define MANUFACTURER    das
-#define PRODUCT         Das Keyboard S (teensy3.2)
-#define DESCRIPTION     QMK keyboard firmware for Das Keyboard
+#define VENDOR_ID     0xFEED
+#define PRODUCT_ID    0x6060
+#define DEVICE_VER    0x0001
+#define MANUFACTURER  das
+#define PRODUCT       Das Keyboard S (teensy3.2)
+#define DESCRIPTION   QMK keyboard firmware for Das Keyboard
 
 #define DEBOUNCE 5
 
@@ -42,8 +39,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 #define MATRIX_ROWS 18
 #define MATRIX_COLS 8
-
-/* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
@@ -60,23 +55,3 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* Locking resynchronize hack */
 // #define LOCKING_RESYNC_ENABLE
-
-/*
- * Feature disable options
- * These options are also useful to firmware size reduction.
- */
-
-/* disable debug print */
-// #define NO_DEBUG
-
-/* disable print */
-// #define NO_PRINT
-
-/* disable action features */
-#define NO_ACTION_LAYER
-#define NO_ACTION_TAPPING
-#define NO_ACTION_ONESHOT
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
-#define SHARED_EP_ENABLE

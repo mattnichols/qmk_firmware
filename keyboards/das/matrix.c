@@ -56,18 +56,15 @@ void matrix_init(void)
 
     palSetPadMode(TEENSY_PIN13_IOPORT, TEENSY_PIN13, PAL_MODE_OUTPUT_PUSHPULL);
 
+    // Blink
     palSetPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
     chThdSleepMilliseconds(300);
     palClearPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
     chThdSleepMilliseconds(300);
-
-    // palSetPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
-    // chThdSleepMilliseconds(50);
-    // palClearPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
-    // chThdSleepMilliseconds(50);
-
-    // delay(500);
-    // palClearPad(GPIOB, 13);
+    palSetPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
+    chThdSleepMilliseconds(300);
+    palClearPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
+    chThdSleepMilliseconds(300);
 
     matrix_init_quantum();
 }
@@ -77,14 +74,13 @@ uint8_t matrix_scan(void)
     for (int row = 0; row < MATRIX_ROWS; row++) {
         matrix_row_t data = 0;
 
-        // strobe row
+        // strobe row (by clearing. The default state is HIGH)
         palClearPad(matrix_row_ports[row], matrix_row_pins[row]);
 
         wait_us(20); // need wait to settle pin state
 
         for (int col = 0; col < MATRIX_COLS; col++) {
-            unsigned int lstate = palReadPad(matrix_col_ports[col], matrix_col_pins[col]);
-            if(lstate == PAL_LOW) {
+            if (PAL_LOW == palReadPad(matrix_col_ports[col], matrix_col_pins[col])) {
                 data = data | (1U << col);
             } else {
                 data = data | (0U << col);
