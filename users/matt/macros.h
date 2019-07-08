@@ -32,6 +32,8 @@ enum macro_keycodes {
   OPEN_ATOM,        // "atom ."
   OPEN_CODE,        // "code ."
 
+  MD_BOOT,          // Reset keyboard for programming
+
   // Give a new safe range
   NEW_SAFE_RANGE,
 

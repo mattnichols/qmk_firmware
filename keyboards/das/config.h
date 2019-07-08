@@ -25,8 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT       Das Keyboard S (teensy3.2)
 #define DESCRIPTION   QMK keyboard firmware for Das Keyboard
 
-#define DEBOUNCE 5
-
 /*
  * Keyboard Matrix Assignments
  *
@@ -37,21 +35,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
  *         ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */
+
 #define MATRIX_ROWS 18
 #define MATRIX_COLS 8
 #define DIODE_DIRECTION COL2ROW
 
+// Uses custom matrix. For reference, here are the pins.
+// #define MATRIX_ROW_PINS { 8, 7, 6, 9, 1, 3, 10, 2, 5, 4, 22, 23, 24, 16, 21, 25, 26, 27 }
+// #define MATRIX_COL_PINS { 11, 20, 18, 12, 14, 17, 15, 19 }
+#define DEBOUNCE 5
+
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 // #define DEBOUNCING_DELAY 5
-
-/* define if matrix has ghost (lacks anti-ghosting diodes) */
-//#define MATRIX_HAS_GHOST
-
-/* number of backlight levels */
-// #define BACKLIGHT_LEVELS 3
-
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-// #define LOCKING_SUPPORT_ENABLE
-
-/* Locking resynchronize hack */
-// #define LOCKING_RESYNC_ENABLE

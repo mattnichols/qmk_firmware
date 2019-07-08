@@ -9,9 +9,6 @@ void matrix_scan_user(void) {
 }
 
 void matrix_init_kb(void) {
-  debug_enable=true;
-  debug_matrix=true;
-
   matrix_init_user();
 };
 

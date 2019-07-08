@@ -1,30 +1,23 @@
-#include <stdint.h>
-#include <stdbool.h>
 #include <string.h>
 #include "hal.h"
 #include "timer.h"
 #include "wait.h"
 #include "print.h"
 #include "matrix.h"
-
-// #include "printf.h"
+#include "teensy.h"
 
 /*
- * Matt3o's WhiteFox
- * Column pins are input with internal pull-down. Row pins are output and strobe with high.
- * Key is high or 1 when it turns on.
+ * Das Keyboard - Teensy 3.2
+ * Column pins are input with internal pull-up. Row pins are output and strobe with low.
+ * Key is high (1) by default and low (0) when it turns on.
  *
- *     col: { PTD0, PTD1, PTD4, PTD5, PTD6, PTD7, PTC1, PTC2 }
- *     row: { PTB2, PTB3, PTB18, PTB19, PTC0, PTC8, PTC9, PTC10, PTC11 }
+ *     #define MATRIX_ROW_PINS { 8, 7, 6, 9, 1, 3, 10, 2, 5, 4, 22, 23, 24, 16, 21, 25, 26, 27 }
+ *     #define MATRIX_COL_PINS { 11, 20, 18, 12, 14, 17, 15, 19 }
  */
-/* matrixy state(1:on, 0:off) */
-static matrix_row_t matrixy[MATRIX_ROWS];
+static matrix_row_t matrix[MATRIX_ROWS];
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 static bool debouncing = false;
 static uint16_t debouncing_time = 0;
-
-// #define MATRIX_ROW_PINS { 8, 7, 6, 9, 1, 3, 10, 2, 5, 4, 22, 23, 24, 16, 21, 25, 26, 27 }
-// #define MATRIX_COL_PINS { 11, 20, 18, 12, 14, 17, 15, 19 }
 
 // Rows ---------------------------
 // static int matrix_row_pins[MATRIX_ROWS] = { 8, 7, 6, 9, 1, 3, 10, 2, 5, 4, 22, 23, 24, 16, 21, 25, 26, 27 };
@@ -36,8 +29,7 @@ static GPIO_TypeDef* matrix_row_ports[MATRIX_ROWS] = {TEENSY_PIN8_IOPORT, TEENSY
 static int matrix_col_pins[MATRIX_COLS] = {TEENSY_PIN11, TEENSY_PIN20, TEENSY_PIN18, TEENSY_PIN12, TEENSY_PIN14, TEENSY_PIN17, TEENSY_PIN15, TEENSY_PIN19};
 static GPIO_TypeDef* matrix_col_ports[MATRIX_COLS] = {TEENSY_PIN11_IOPORT, TEENSY_PIN20_IOPORT, TEENSY_PIN18_IOPORT, TEENSY_PIN12_IOPORT, TEENSY_PIN14_IOPORT, TEENSY_PIN17_IOPORT, TEENSY_PIN15_IOPORT, TEENSY_PIN19_IOPORT};
 
-void matrix_init(void)
-{
+void matrix_init(void) {
     //debug_matrix = true;
 
     /* Row(strobe) */
@@ -51,26 +43,20 @@ void matrix_init(void)
         palSetPadMode(matrix_col_ports[col], matrix_col_pins[col], PAL_MODE_INPUT_PULLUP);
     }
 
-    memset(matrixy, 0, MATRIX_ROWS * sizeof(matrix_row_t));
+    memset(matrix, 0, MATRIX_ROWS * sizeof(matrix_row_t));
     memset(matrix_debouncing, 0, MATRIX_ROWS * sizeof(matrix_row_t));
 
-    palSetPadMode(TEENSY_PIN13_IOPORT, TEENSY_PIN13, PAL_MODE_OUTPUT_PUSHPULL);
+    // Blink Onboard Led
+    onboardLedInit();
 
-    // Blink
-    palSetPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
+    onboardLedBlink(300);
     chThdSleepMilliseconds(300);
-    palClearPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
-    chThdSleepMilliseconds(300);
-    palSetPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
-    chThdSleepMilliseconds(300);
-    palClearPad(TEENSY_PIN13_IOPORT, TEENSY_PIN13);
-    chThdSleepMilliseconds(300);
+    onboardLedBlink(300);
 
     matrix_init_quantum();
 }
 
-uint8_t matrix_scan(void)
-{
+uint8_t matrix_scan(void) {
     for (int row = 0; row < MATRIX_ROWS; row++) {
         matrix_row_t data = 0;
 
@@ -97,10 +83,9 @@ uint8_t matrix_scan(void)
         }
     }
 
-
     if (debouncing && timer_elapsed(debouncing_time) > DEBOUNCE) {
         for (int row = 0; row < MATRIX_ROWS; row++) {
-            matrixy[row] = matrix_debouncing[row];
+            matrix[row] = matrix_debouncing[row];
         }
         debouncing = false;
     }
@@ -109,19 +94,16 @@ uint8_t matrix_scan(void)
     return 1;
 }
 
-bool matrix_is_on(uint8_t row, uint8_t col)
-{
-    return (matrixy[row] & (1<<col));
+bool matrix_is_on(uint8_t row, uint8_t col) {
+    return (matrix[row] & (1<<col));
 }
 
-matrix_row_t matrix_get_row(uint8_t row)
-{
-    matrix_row_t r = matrixy[row];
+matrix_row_t matrix_get_row(uint8_t row) {
+    matrix_row_t r = matrix[row];
     return r;
 }
 
-void matrix_print(void)
-{
+void matrix_print(void) {
     xprintf("\nr/c 01234567\n");
     for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
         xprintf("%X0: ", row);

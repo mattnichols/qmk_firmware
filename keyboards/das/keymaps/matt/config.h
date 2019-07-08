@@ -29,3 +29,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 // #define NO_ACTION_ONESHOT
 #define NO_ACTION_MACRO
 // #define NO_ACTION_FUNCTION
+
+// Consider MT a mod if another key is simultaneously pressed.
+#define PERMISSIVE_HOLD

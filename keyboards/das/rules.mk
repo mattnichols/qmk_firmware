@@ -1,4 +1,5 @@
 SRC =	matrix.c
+SRC +=  teensy.c
 
 ## chip/board settings
 # - the next two should match the directories in
