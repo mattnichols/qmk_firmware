@@ -18,41 +18,61 @@ void matrix_scan_kb(void) {
   matrix_scan_user();
 };
 
-#define CAPS_LOCK_LED_PIN  TEENSY_PIN28
-#define CAPS_LOCK_LED_PORT TEENSY_PIN28_IOPORT
-#define NUM_LOCK_LED_PIN   TEENSY_PIN29
-#define NUM_LOCK_LED_PORT  TEENSY_PIN29_IOPORT
-#define SCROLL_LOCK_LED_PIN   TEENSY_PIN30
-#define SCROLL_LOCK_LED_PORT  TEENSY_PIN30_IOPORT
 
 void keyboard_pre_init_kb(void) {
-    // Set our LED pins as output
-    palSetPadMode(TEENSY_PIN28_IOPORT, TEENSY_PIN28, PAL_MODE_OUTPUT_PUSHPULL);
-    palSetPadMode(TEENSY_PIN29_IOPORT, TEENSY_PIN29, PAL_MODE_OUTPUT_PUSHPULL);
-    palSetPadMode(TEENSY_PIN30_IOPORT, TEENSY_PIN30, PAL_MODE_OUTPUT_PUSHPULL);
-
+    onboardLedInit();
     keyboard_pre_init_user();
+}
+
+void keyboard_post_init_kb(void) {
+    // Blink Onboard Led
+    onboardLedBlink(300);
+
+    // Flash lock leds
+    numLockLedOn();
+    chThdSleepMilliseconds(80);
+    numLockLedOff();
+    scrollLockLedOff();
+
+    capLockLedOn();
+    chThdSleepMilliseconds(80);
+    capLockLedOff();
+    chThdSleepMilliseconds(80);
+
+    scrollLockLedOn();
+    chThdSleepMilliseconds(80);
+    scrollLockLedOff();
+    chThdSleepMilliseconds(80);
+
+    // Blink all
+    numLockLedOn();
+    capLockLedOn();
+    scrollLockLedOn();
+
+    chThdSleepMilliseconds(200);
+
+    numLockLedOff();
+    capLockLedOff();
+    scrollLockLedOff();
 }
 
 void led_set_kb(uint8_t usb_led) {
     if (IS_LED_ON(usb_led, USB_LED_NUM_LOCK)) {
-        palSetPad(NUM_LOCK_LED_PORT, NUM_LOCK_LED_PIN);
+        numLockLedOn();
     } else {
-        palClearPad(NUM_LOCK_LED_PORT, NUM_LOCK_LED_PIN);
+        numLockLedOff();
     }
 
     if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK)) {
-        onboardLedOn();
-        palSetPad(CAPS_LOCK_LED_PORT, CAPS_LOCK_LED_PIN);
+        capLockLedOn();
     } else {
-        onboardLedOff();
-        palClearPad(CAPS_LOCK_LED_PORT, CAPS_LOCK_LED_PIN);
+        capLockLedOff();
     }
 
     if (IS_LED_ON(usb_led, USB_LED_SCROLL_LOCK)) {
-        palSetPad(SCROLL_LOCK_LED_PORT, SCROLL_LOCK_LED_PIN);
+        scrollLockLedOn();
     } else {
-        palClearPad(SCROLL_LOCK_LED_PORT, SCROLL_LOCK_LED_PIN);
+        scrollLockLedOff();
     }
 
     led_set_user(usb_led);
