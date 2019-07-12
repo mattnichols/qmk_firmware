@@ -45,7 +45,9 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
                 key_timer = timer_read32();
             } else {
                 if (timer_elapsed32(key_timer) >= 500) {
-                    onboardLedBlink(600);
+                    numLockLedOn();
+                    capLockLedOn();
+                    scrollLockLedOn();
                     reset_keyboard();
                 }
             }
