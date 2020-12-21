@@ -1,0 +1,28 @@
+
+# ErgoDox EZ
+make ergodox_ez:matt
+
+# Masdrop CTRL
+make massdrop/ctrl:matt
+# ./mdloader_mac --first --restart -D ./massdrop_ctrl_matt.bin
+
+# 75 key
+make idobo:matt
+make idobo:default
+# make idobo:matt:dfu
+# make idobo:defaul:dfu
+
+# Das keyboard with Teensy
+make das:default && mv .build/das_default.hex ./das_default.hex
+make das:matt && mv .build/das_matt.hex ./das_matt.hex
+
+# Preonic
+make preonic/rev3:default
+make preonic/rev3:matt
+# make preonic/rev3:matt:dfu
+
+# FC660C
+make fc660c:matt:dfu
+
+# Tokyo60
+make tokyo60:matt:dfu
